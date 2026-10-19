@@ -25,9 +25,9 @@ jobs:
         run: terraform validate
       - name: Run checkov security scan
         uses: bridgecrewio/checkov-action@v12
-          with:
-            directory: .
-            framework: terraform
-            soft_fail: true
+        with:
+          directory: .
+          framework: terraform
+          soft_fail: true
 
         
