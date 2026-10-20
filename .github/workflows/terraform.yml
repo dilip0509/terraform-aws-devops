@@ -31,10 +31,12 @@ jobs:
         run: terraform fmt -check -recursive
       
       - name: initialize terraform
-        run: terraform init -backend=false
+        run: terraform init 
       
       - name: validate terraform
         run: terraform validate
+      - name: terraform plan
+        run: terraform plan -lock-timeout=60s
       
       - name: Run checkov security scan
         uses: bridgecrewio/checkov-action@v12
