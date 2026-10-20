@@ -1,4 +1,4 @@
-name: Terraform CI 
+name: Terraform CI
 on:
   push:
     branches:
@@ -9,7 +9,7 @@ on:
 permissions:
   contents: read
   id-token: write
-jobs: 
+jobs:
   terraform-check:
     name: Terraform Format and Validate
     runs-on: ubuntu-latest
@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
       - name: configure AWS cred
         uses: aws-actions/configure-aws-credentials@v4
-        with: 
+        with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ap-south-1
       - name: Set up Terraform
@@ -34,8 +34,3 @@ jobs:
         with:
           directory: .
           framework: terraform
-          soft_fail: true
-
-       
-
-
