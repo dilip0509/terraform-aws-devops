@@ -42,8 +42,8 @@ jobs:
         run: terraform validate
       - name: terraform plan
         run: terraform plan -lock-timeout=60s
-      - name: terraform apply
-        run: terraform apply -auto-approve
+#      - name: terraform apply
+#        run: terraform apply -auto-approve
       
       - name: Run checkov security scan
         uses: bridgecrewio/checkov-action@v12
