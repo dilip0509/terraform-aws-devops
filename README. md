@@ -1,0 +1,178 @@
+AWS Infrastructure Automation using Terraform and GitHub Actions
+
+📌 Project Overview
+
+This project demonstrates the automation of AWS infrastructure using Terraform (Infrastructure as Code) and GitHub Actions (CI/CD).
+
+The goal is to provision and manage AWS resources through reusable Terraform configurations and automate code quality checks, validation, planning, and security scanning through a GitHub Actions workflow.
+
+🏗️ Architecture
+
+Workflow:
+
+1. Developer pushes Terraform code to GitHub.
+2. GitHub Actions triggers the CI workflow.
+3. Terraform formatting and validation checks are performed.
+4. GitHub Actions authenticates to AWS using IAM and OpenID Connect (OIDC).
+5. Terraform initializes the remote backend in Amazon S3.
+6. Terraform generates an execution plan.
+7. Checkov scans the Terraform configuration for potential security issues.
+8. Infrastructure can be deployed after reviewing the plan and confirming permissions and costs.
+
+🛠️ Technologies Used
+
+- Cloud Provider: Amazon Web Services (AWS)
+- Infrastructure as Code: Terraform
+- CI/CD: GitHub Actions
+- Version Control: Git and GitHub
+- Authentication: AWS IAM and OpenID Connect (OIDC)
+- Remote State: Amazon S3 with native state locking
+- Security Scanning: Checkov
+
+☁️ AWS Resources in Terraform Configuration
+
+The project includes Terraform configurations for:
+
+- Amazon VPC
+- Public and private subnets
+- Internet Gateway
+- Route tables and associations
+- Security groups
+- Application Load Balancer (ALB)
+- ALB target groups and listener
+- EC2 launch template
+- Auto Scaling Group
+
+Note: The resources listed above are defined in the project configuration. Successful creation depends on deployment, IAM permissions, and AWS service quotas.
+
+🔄 CI/CD Workflow
+
+The GitHub Actions workflow automates the following steps:
+
+- Terraform Format: Checks formatting using "terraform fmt".
+- Terraform Init: Initializes the Terraform working directory and backend.
+- Terraform Validate: Validates Terraform configuration syntax.
+- Terraform Plan: Previews proposed infrastructure changes.
+- Checkov Scan: Scans Infrastructure as Code for potential security issues.
+- AWS Authentication: Uses GitHub Actions OIDC to assume an AWS IAM role without storing long-lived AWS access keys.
+
+The workflow is designed to validate and plan changes. Infrastructure deployment should be performed only through an explicitly configured and authorized apply process.
+
+🗄️ Terraform Remote State Management
+
+Terraform state is stored remotely in Amazon S3 to support centralized state management.
+
+Configuration:
+
+- S3 Bucket: "dilip-terraform-state"
+- State File: "terraform.tfstate"
+- AWS Region: "ap-south-1"
+- Encryption: Enabled
+- State Locking: Native S3 lock file using "use_lockfile = true"
+
+State locking helps prevent concurrent Terraform operations from modifying the same state simultaneously.
+
+📂 Repository Structure
+
+terraform-aws-devops/
+├── .github/
+│   └── workflows/
+│       └── terraform.yml
+├── .gitignore
+├── .terraform.lock.hcl
+├── provider.tf
+├── main.tf
+├── subnet.tf
+├── igw.tf
+├── rt.tf
+├── rt_association.tf
+├── security_group.tf
+├── ami.tf
+├── alb.tf
+├── target_group.tf
+├── listner.tf
+├── launch_template.tf
+├── asg.tf
+└── README.md
+
+The structure above is illustrative. Keep the file names in this section aligned with the actual files in the repository.
+
+⚙️ Prerequisites
+
+Before running the project, ensure you have:
+
+- An AWS account
+- Terraform CLI installed
+- AWS CLI installed and configured
+- Git installed
+- An S3 bucket configured for Terraform remote state
+- An IAM role with the required permissions
+- GitHub Actions OIDC configured in AWS IAM
+
+🚀 Running Terraform Locally
+
+1. Clone the repository
+
+git clone https://github.com/dilip0509/terraform-aws-devops.git
+cd terraform-aws-devops
+
+2. Initialize Terraform
+
+terraform init
+
+3. Format the Terraform files
+
+terraform fmt -recursive
+
+4. Validate the configuration
+
+terraform validate
+
+5. Review the execution plan
+
+terraform plan
+
+6. Deploy infrastructure when ready
+
+Review the plan and verify AWS permissions, service quotas, and estimated costs before running:
+
+terraform apply
+
+7. Destroy managed resources when finished
+
+terraform destroy
+
+Always review the destroy plan before confirming. Also check the AWS console for resources left behind by failed or partially completed deployments.
+
+🔐 Security Best Practices
+
+- Use IAM roles and OIDC for GitHub Actions authentication.
+- Avoid storing AWS access keys in source code.
+- Never commit Terraform state files, private keys, or secret variable files.
+- Keep S3 Block Public Access enabled for the state bucket.
+- Follow least-privilege IAM permissions.
+- Review Terraform plans before applying changes.
+- Use ".gitignore" to exclude local Terraform state and generated files.
+
+💰 Cost Management
+
+AWS resources may incur charges even when an application is not receiving traffic.
+
+- Review costs for ALB, EC2, EBS, and other deployed resources.
+- Use "terraform destroy" when the environment is no longer needed.
+- Confirm that resources were successfully removed.
+- Retain the S3 state bucket if you intend to continue using the project.
+
+
+
+👨‍💻 Author
+
+Dilipa Annappa
+
+GitHub: "dilip0509" (https://github.com/dilip0509)
+
+Repository: "terraform-aws-devops" (https://github.com/dilip0509/terraform-aws-devops)
+
+---
+
+This is a hands-on DevOps learning project focused on AWS infrastructure automation, Infrastructure as Code, and CI/CD practices.
