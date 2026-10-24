@@ -163,18 +163,7 @@ AWS resources may incur charges even when an application is not receiving traffi
 - Confirm that resources were successfully removed.
 - Retain the S3 state bucket if you intend to continue using the project.
 
-🎯 Learning Outcomes
 
-Through this project, I practiced:
-
-- AWS infrastructure provisioning with Terraform
-- Terraform remote state management and state locking
-- GitHub Actions CI/CD automation
-- Secure AWS authentication using OIDC
-- Terraform formatting, validation, and planning
-- Infrastructure security scanning using Checkov
-- Troubleshooting IAM permissions, AWS quotas, and deployment failures
-- AWS resource lifecycle and cost management
 
 👨‍💻 Author
 
